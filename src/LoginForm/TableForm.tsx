@@ -57,7 +57,7 @@ const TableForm: React.FC<TableFormProps> = ({ users }) => {
 
           <TableContainer component={Paper} sx={{ borderRadius: 2 }}>
             <Table sx={{ minWidth: 650 }} size="medium">
-              <TableHead sx={{ backgroundColor: "rgb(0, 0, 0)" }}>
+              <TableHead sx={{ backgroundColor: "rgba(49, 134, 61, 0.83)" }}>
                 <TableRow>
                   <TableCell sx={{ color: "white", fontWeight: "bold" }}>
                     First Name
