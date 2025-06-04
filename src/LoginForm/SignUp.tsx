@@ -42,7 +42,7 @@ const SignUp: React.FC<SignUpProps> = ({ onSubmitUser }) => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));  
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const validateForm = () => {
@@ -113,7 +113,7 @@ const SignUp: React.FC<SignUpProps> = ({ onSubmitUser }) => {
         password: "",
         confirmPassword: "",
       });
-    navigate("/usermanagement/usertable"); 
+      navigate("/usermanagement/usertable");
     }
   };
 
@@ -244,14 +244,28 @@ const SignUp: React.FC<SignUpProps> = ({ onSubmitUser }) => {
                   <Button
                     type="submit"
                     variant="contained"
-                    sx={{ ml: 1, backgroundColor: "black", color: "white" }}
+                    sx={{
+                      ml: 1, backgroundColor: "black", color: "white",
+                      mt: 1, fontWeight: "bold",
+                      px: 2.5, py: 1,
+                      "&:hover": {
+                        backgroundColor: "rgb(0, 0, 0)", color: "rgb(232, 242, 235)",
+                      },
+                    }}
                   >
                     Sign Up
                   </Button>
                   <Button
                     type="button"
                     variant="outlined"
-                    sx={{ borderColor: "black", color: "black" }}
+                    sx={{
+                      borderColor: "black", color: "black",
+                      mt: 1, fontWeight: "bold",
+                      px: 2.5, py: 1,
+                      "&:hover": {
+                        backgroundColor: "black", color: "rgb(232, 242, 235)",
+                      },
+                    }}
                     onClick={handleClear}
                   >
                     Clear
