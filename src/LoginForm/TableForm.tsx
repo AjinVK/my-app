@@ -32,7 +32,7 @@ const TableForm: React.FC<TableFormProps> = ({ users }) => {
     <Box
       sx={{
         minHeight: "100vh",
-        backgroundColor: "#f5f5f5",
+        backgroundImage: "linear-gradient(to right,rgba(78, 38, 239, 0.69),rgba(86, 7, 102, 0.71))",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
@@ -43,7 +43,7 @@ const TableForm: React.FC<TableFormProps> = ({ users }) => {
         sx={{
           width: "100%",
           maxWidth: 800,
-          boxShadow: 6,
+          boxShadow: 8,
           borderRadius: 4,
         }}
       >
@@ -57,7 +57,7 @@ const TableForm: React.FC<TableFormProps> = ({ users }) => {
 
           <TableContainer component={Paper} sx={{ borderRadius: 2 }}>
             <Table sx={{ minWidth: 650 }} size="medium">
-              <TableHead sx={{ backgroundColor: "rgba(49, 134, 61, 0.83)" }}>
+              <TableHead sx={{ backgroundColor: "rgba(72, 49, 134, 0.83)" }}>
                 <TableRow>
                   <TableCell sx={{ color: "white", fontWeight: "bold" }}>
                     First Name
@@ -97,7 +97,14 @@ const TableForm: React.FC<TableFormProps> = ({ users }) => {
           <Box display="flex" justifyContent="center" mt={3}>
             <Button
               variant="contained"
-              sx={{ backgroundColor: "#076653", color: "#fff" }}
+              sx={{
+                backgroundColor: "rgba(51, 21, 140, 0.86)", color: "#fff",
+                mt: 2, fontWeight: "bold",
+                px: 3, py: 1.3,
+                "&:hover": {
+                  backgroundColor: "rgb(51, 21, 140)", color: "rgb(255, 255, 255)",
+                },
+              }}
               onClick={() => navigate("/")}
             >
               Back to Login
