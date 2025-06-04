@@ -19,7 +19,7 @@ const Login: React.FC = () => {
     emailError: "",
     passwordError: "",
   });
-const navigate = useNavigate();
+  const navigate = useNavigate();
   const handleSignUpClick = () => {
     navigate("/usermanagement/signup");
   };
@@ -73,9 +73,8 @@ const navigate = useNavigate();
       sx={{
         display: "flex",
         justifyContent: "center",
-        alignItems: "center",
-        width: "100%",
-        height: "100vh",
+        alignItems: "center",       
+        minHeight: "100vh",
         backgroundImage: "linear-gradient(to right,rgb(226, 239, 38),rgb(7, 102, 83),rgb(12, 52, 44))",
         px: 2,
       }}
@@ -135,7 +134,14 @@ const navigate = useNavigate();
                   <Button
                     type="submit"
                     variant="contained"
-                    sx={{ backgroundColor: "#076653", color: "#fff" }}
+                    sx={{
+                      backgroundColor: "#076653", color: "#fff",
+                      mt: 2, fontWeight: "bold",
+                      px: 3, py: 1.3,
+                      "&:hover": {
+                        backgroundColor: "#054d3e",
+                      },
+                    }}
                     fullWidth
                   >
                     Log in
@@ -143,7 +149,14 @@ const navigate = useNavigate();
                   <Button
                     type="button"
                     variant="outlined"
-                    sx={{ borderColor: "#076653", color: "#076653" }}
+                    sx={{
+                      borderColor: "#076653", color: "#076653",
+                      mt: 2, fontWeight: "bold",
+                      px: 3, py: 1.3,
+                      "&:hover": {
+                        backgroundColor: "#054d3e", color: "rgb(232, 242, 235)",
+                      },
+                    }}
                     onClick={handleSignUpClick}
                     fullWidth
                   >
@@ -162,11 +175,16 @@ const navigate = useNavigate();
             p={2}
           >
             <CardMedia
-              component="img"
-              image="/vite.svg"
-              alt="Illustration"
-              sx={{ width: { xs: "150px", sm: "200px" }, height: { xs: "150px", sm:"200px" } }}
-            />
+  component="img"
+  image="/vite.svg"
+  alt="Illustration"
+  sx={{
+    width: { xs: "150px", sm: "200px" },   
+    height: { xs: "150px", sm: "200px" },
+    mx: "auto",
+    mt: 2,     
+  }}
+/>
           </Grid>
         </Grid>
       </Card>
