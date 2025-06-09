@@ -1,33 +1,55 @@
 import React, { useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import SignUp from "./SignUp";
 import TableForm from "./TableForm";
 
-const UserManagement: React.FC = () => {
-  const [users, setUsers] = useState<
-    Array<{
-      firstName: string;
-      lastName: string;
-      email: string;
-      password: string;
-      confirmPassword: string;
-    }>
-  >([]);
+interface User {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
 
-  const addUser = (user: {
-    firstName: string;
-    lastName: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
-  }) => {
-    setUsers((prevUsers) => [...prevUsers, user]);
+const UserManagement: React.FC = () => {
+  const [users, setUsers] = useState<User[]>([]);
+  const location = useLocation();
+
+  // If navigating with a user object to edit, get it from state
+  const editingUser: User | null = location.state?.user || null;
+
+  const addUser = (newUser: User) => {
+    setUsers((prevUsers) => [...prevUsers, newUser]);
+  };
+
+  const updateUser = (updatedUser: User) => {
+    setUsers((prevUsers) =>
+      prevUsers.map((user) =>
+        user.email === updatedUser.email ? updatedUser : user
+      )
+    );
+  };
+
+  const deleteUser = (email: string) => {
+    setUsers((prevUsers) => prevUsers.filter((user) => user.email !== email));
   };
 
   return (
     <Routes>
-      <Route path="signup" element={<SignUp onSubmitUser={addUser} />} />
-      <Route path="usertable" element={<TableForm users={users} />} />
+      <Route
+        path="signup"
+        element={
+          <SignUp
+            onSubmitUser={addUser}
+            onUpdateUser={updateUser}
+            editingUser={editingUser}
+          />
+        }
+      />
+      <Route
+        path="usertable"
+        element={<TableForm users={users} onDeleteUser={deleteUser} />}
+      />
     </Routes>
   );
 };
