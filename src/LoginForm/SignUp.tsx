@@ -5,6 +5,7 @@ import {
     Card,
     CardActions,
     CardContent,
+    CircularProgress,
     Grid,
     TextField,
     Typography,
@@ -30,6 +31,7 @@ const SignUp: React.FC<SignUpProps> = (props) => {
     const navigate = useNavigate();
 
     const [isEditing, setIsEditing] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(false);
 
     const [formData, setFormData] = useState<User>({
         firstName: "",
@@ -117,36 +119,46 @@ const SignUp: React.FC<SignUpProps> = (props) => {
         return isValid;
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         if (!validateForm()) return;
 
-        if (isEditing) {
-            onUpdateUser(formData);
-            alert("User updated successfully!");
-        } else {
-            onSubmitUser(formData);
-            alert("Sign Up Successful!");
+        setLoading(true);
+
+        try {
+            await new Promise((resolve) => setTimeout(resolve, 1500)); // Simulate API delay
+
+            if (isEditing) {
+                onUpdateUser(formData);
+                alert("User updated successfully!");
+            } else {
+                onSubmitUser(formData);
+                alert("Sign Up Successful!");
+            }
+
+            setFormData({
+                firstName: "",
+                lastName: "",
+                email: "",
+                password: "",
+                confirmPassword: "",
+            });
+            setErrors({
+                firstName: "",
+                lastName: "",
+                email: "",
+                password: "",
+                confirmPassword: "",
+            });
+            setIsEditing(false);
+
+            navigate("/usermanagement/usertable");
+        } catch (error) {
+            alert("Something went wrong!");
+        } finally {
+            setLoading(false);
         }
-
-        setFormData({
-            firstName: "",
-            lastName: "",
-            email: "",
-            password: "",
-            confirmPassword: "",
-        });
-        setErrors({
-            firstName: "",
-            lastName: "",
-            email: "",
-            password: "",
-            confirmPassword: "",
-        });
-        setIsEditing(false);
-
-        navigate("/usermanagement/usertable");
     };
 
     const handleClear = () => {
@@ -166,6 +178,18 @@ const SignUp: React.FC<SignUpProps> = (props) => {
         });
         setIsEditing(false);
     };
+    if (loading) return (
+        <Box
+            sx={{
+                minHeight: "100vh",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: "rgb(0, 0, 0)",
+            }}>
+            <CircularProgress size={70} sx={{ color: "rgba(141, 11, 11, 0.83)" }} />
+        </Box>
+    );
 
     return (
         <Box
