@@ -100,14 +100,14 @@ const TableForm: React.FC<TableFormProps> = ({ users, onDeleteUser }) => {
                                                 <Button
                                                     variant="contained"
                                                     size="small"
+                                                    color="success"
                                                     sx={{
                                                         mr: 1,
-                                                        backgroundColor: "#1976d2",
                                                         fontWeight: "bold",
                                                         mt: 1,
                                                         px: 2.5,
                                                         py: 1,
-                                                        "&:hover": { backgroundColor: "#115293" },
+                                                        "&:hover": { backgroundColor: "rgb(51, 105, 63)" },
                                                     }}
                                                     onClick={() => handleEdit(user)}
                                                 >
@@ -117,7 +117,8 @@ const TableForm: React.FC<TableFormProps> = ({ users, onDeleteUser }) => {
                                                     variant="contained"
                                                     size="small"
                                                     color="error"
-                                                    sx={{ fontWeight: "bold",
+                                                    sx={{
+                                                        fontWeight: "bold",
                                                         mt: 1,
                                                         px: 2,
                                                         py: 1,

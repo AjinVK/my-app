@@ -73,7 +73,7 @@ const Login: React.FC = () => {
       sx={{
         display: "flex",
         justifyContent: "center",
-        alignItems: "center",       
+        alignItems: "center",
         minHeight: "100vh",
         backgroundImage: "linear-gradient(to right,rgb(226, 239, 38),rgb(7, 102, 83),rgb(12, 52, 44))",
         px: 2,
@@ -136,7 +136,7 @@ const Login: React.FC = () => {
                     variant="contained"
                     sx={{
                       backgroundColor: "#076653", color: "#fff",
-                      mt: 2, fontWeight: "bold",
+                      mt: 2, fontWeight: "bold", borderRadius: "50px",
                       px: 3, py: 1.3,
                       "&:hover": {
                         backgroundColor: "#054d3e",
@@ -151,7 +151,7 @@ const Login: React.FC = () => {
                     variant="outlined"
                     sx={{
                       borderColor: "#076653", color: "#076653",
-                      mt: 2, fontWeight: "bold",
+                      mt: 2, fontWeight: "bold", borderRadius: "50px",
                       px: 3, py: 1.3,
                       "&:hover": {
                         backgroundColor: "#054d3e", color: "rgb(232, 242, 235)",
@@ -175,16 +175,16 @@ const Login: React.FC = () => {
             p={2}
           >
             <CardMedia
-  component="img"
-  image="/vite.svg"
-  alt="Illustration"
-  sx={{
-    width: { xs: "150px", sm: "200px" },   
-    height: { xs: "150px", sm: "200px" },
-    mx: "auto",
-    mt: 2,     
-  }}
-/>
+              component="img"
+              image="/vite.svg"
+              alt="Illustration"
+              sx={{
+                width: { xs: "150px", sm: "200px" },
+                height: { xs: "150px", sm: "200px" },
+                mx: "auto",
+                mt: 2,
+              }}
+            />
           </Grid>
         </Grid>
       </Card>

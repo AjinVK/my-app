@@ -25,7 +25,8 @@ interface SignUpProps {
     editingUser?: User | null;
 }
 
-const SignUp: React.FC<SignUpProps> = ({ onSubmitUser, onUpdateUser, editingUser }) => {
+const SignUp: React.FC<SignUpProps> = (props) => {
+    const { onSubmitUser, onUpdateUser, editingUser } = props;
     const navigate = useNavigate();  // Call at top level
 
     const [isEditing, setIsEditing] = useState<boolean>(false);
