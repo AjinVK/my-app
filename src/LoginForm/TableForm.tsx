@@ -63,13 +63,15 @@ const TableForm: React.FC<TableFormProps> = ({ users, onDeleteUser }) => {
                     <Typography
                         variant="h4"
                         sx={{ fontWeight: "bold", textAlign: "center", mb: 3 }}
+                        color="rgba(92, 8, 109, 0.78)"                        
+                        fontSize={{ xs: "1.5rem", sm: "2rem", md: "2.5rem" }}
                     >
                         Registered User Details
                     </Typography>
 
                     <TableContainer component={Paper} sx={{ borderRadius: 2 }}>
                         <Table sx={{ minWidth: 650 }} size="medium">
-                            <TableHead sx={{ backgroundColor: "rgba(72, 49, 134, 0.83)" }}>
+                            <TableHead sx={{ backgroundColor: "rgba(72, 49, 134, 0.93)" }}>
                                 <TableRow>
                                     <TableCell sx={{ color: "white", fontWeight: "bold" }}>
                                         First Name

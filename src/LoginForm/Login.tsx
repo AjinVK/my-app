@@ -94,7 +94,7 @@ const Login: React.FC = () => {
         >
           <Grid size={{ xs: 12, sm: 6 }} p={1}>
             <CardContent>
-              <Typography variant="h5" fontWeight={700} textAlign="center" mb={2}>
+              <Typography variant="h5" fontWeight={700} textAlign="center" mb={2} color="rgb(5, 74, 60)">
                 Login Form
               </Typography>
 

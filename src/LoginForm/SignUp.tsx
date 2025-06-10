@@ -206,6 +206,7 @@ const SignUp: React.FC<SignUpProps> = (props) => {
                                 variant="h5"
                                 textAlign={"center"}
                                 mb={2}
+                                color="rgb(164, 20, 20)"
                             >
                                 {isEditing ? "Edit User" : "Sign Up"}
                             </Typography>
