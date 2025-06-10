@@ -127,7 +127,7 @@ const SignUp: React.FC<SignUpProps> = (props) => {
         setLoading(true);
 
         try {
-            await new Promise((resolve) => setTimeout(resolve, 1500)); // Simulate API delay
+            await new Promise((resolve) => setTimeout(resolve, 1500)); 
 
             if (isEditing) {
                 onUpdateUser(formData);
@@ -178,18 +178,6 @@ const SignUp: React.FC<SignUpProps> = (props) => {
         });
         setIsEditing(false);
     };
-    if (loading) return (
-        <Box
-            sx={{
-                minHeight: "100vh",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                backgroundColor: "rgb(0, 0, 0)",
-            }}>
-            <CircularProgress size={70} sx={{ color: "rgba(141, 11, 11, 0.83)" }} />
-        </Box>
-    );
 
     return (
         <Box
@@ -203,6 +191,7 @@ const SignUp: React.FC<SignUpProps> = (props) => {
                     "linear-gradient(159deg, rgba(131, 58, 180, 1) 0%, rgba(253, 29, 29, 1) 50%, rgba(252, 176, 69, 1) 100%)",
                 px: 2,
                 py: 4,
+                position: "relative",
             }}
         >
             <Card
@@ -345,6 +334,25 @@ const SignUp: React.FC<SignUpProps> = (props) => {
                     </Grid>
                 </Grid>
             </Card>
+
+            {loading && (
+                <Box
+                    sx={{
+                        position: "fixed",
+                        top: 0,
+                        left: 0,
+                        width: "100vw",
+                        height: "100vh",
+                        backgroundColor: "rgba(0, 0, 0, 0.28)",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        zIndex: 9999,
+                    }}
+                >
+                    <CircularProgress size={70} thickness={3} color="inherit" />
+                </Box>
+            )}
         </Box>
     );
 };

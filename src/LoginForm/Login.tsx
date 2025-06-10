@@ -28,7 +28,7 @@ const Login: React.FC = () => {
     setIsLoading(true);
     setTimeout(() => {
       navigate("/usermanagement/signup");
-    }, 1000);
+    }, 1500);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -74,22 +74,6 @@ const Login: React.FC = () => {
       });
     }
   };
-
-  if (isLoading) {
-    return (
-      <Box
-        sx={{
-          minHeight: "100vh",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          backgroundColor: "rgb(0, 0, 0)",
-        }}
-      >
-        <CircularProgress size={70} sx={{ color: "rgb(11, 141, 35)" }} />
-      </Box>
-    );
-  }
 
   return (
     <Box
@@ -211,6 +195,25 @@ const Login: React.FC = () => {
           </Grid>
         </Grid>
       </Card>
+
+      {isLoading && (
+        <Box
+          sx={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100vw",
+            height: "100vh",
+            backgroundColor: "rgba(0, 0, 0, 0.28)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            zIndex: 9999,
+          }}
+        >
+          <CircularProgress size={70} thickness={3} color="inherit" />
+        </Box>
+      )}
     </Box>
   );
 };
