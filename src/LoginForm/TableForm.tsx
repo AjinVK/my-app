@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
     Box,
     Card,
@@ -12,6 +12,7 @@ import {
     Typography,
     Paper,
     Button,
+    CircularProgress,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
@@ -30,6 +31,7 @@ interface TableFormProps {
 
 const TableForm: React.FC<TableFormProps> = ({ users, onDeleteUser }) => {
     const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleEdit = (user: User) => {
         navigate("/usermanagement/signup", { state: { user } });
@@ -37,6 +39,13 @@ const TableForm: React.FC<TableFormProps> = ({ users, onDeleteUser }) => {
 
     const handleDelete = (email: string) => {
         onDeleteUser(email);
+    };
+
+    const handleHomeClick = () => {
+        setIsLoading(true);
+        setTimeout(() => {
+            navigate("/");
+        }, 1500);
     };
 
     return (
@@ -63,7 +72,7 @@ const TableForm: React.FC<TableFormProps> = ({ users, onDeleteUser }) => {
                     <Typography
                         variant="h4"
                         sx={{ fontWeight: "bold", textAlign: "center", mb: 3 }}
-                        color="rgba(92, 8, 109, 0.78)"                        
+                        color="rgba(92, 8, 109, 0.78)"
                         fontSize={{ xs: "1.5rem", sm: "2rem", md: "2.5rem" }}
                     >
                         Registered User Details
@@ -158,13 +167,31 @@ const TableForm: React.FC<TableFormProps> = ({ users, onDeleteUser }) => {
                                     color: "rgb(255, 255, 255)",
                                 },
                             }}
-                            onClick={() => navigate("/")}
+                            onClick={handleHomeClick}
                         >
                             Back to Login
                         </Button>
                     </Box>
                 </CardContent>
             </Card>
+            {isLoading && (
+                <Box
+                    sx={{
+                        position: "fixed",
+                        top: 0,
+                        left: 0,
+                        width: "100vw",
+                        height: "100vh",
+                        backgroundColor: "rgba(0, 0, 0, 0.28)",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        zIndex: 9999,
+                    }}
+                >
+                    <CircularProgress size={70} thickness={3} color="inherit" />
+                </Box>
+            )}
         </Box>
     );
 };
