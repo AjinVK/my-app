@@ -27,7 +27,7 @@ interface SignUpProps {
 
 const SignUp: React.FC<SignUpProps> = (props) => {
     const { onSubmitUser, onUpdateUser, editingUser } = props;
-    const navigate = useNavigate();  // Call at top level
+    const navigate = useNavigate();
 
     const [isEditing, setIsEditing] = useState<boolean>(false);
 

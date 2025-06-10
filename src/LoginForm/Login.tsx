@@ -81,7 +81,7 @@ const Login: React.FC = () => {
     >
       <Card
         sx={{
-          width: { xs: "80%", md: "550px" },
+          width: { xs: "80%", md: "600px" },
           borderRadius: "16px",
           boxShadow: 6,
           backgroundColor: "rgb(232, 242, 235)",
@@ -104,7 +104,7 @@ const Login: React.FC = () => {
                     label="Email"
                     name="email"
                     variant="standard"
-                    size="small"
+                    size="small"                  
                     value={formData.email}
                     onChange={handleChange}
                     error={!!formData.emailError}
