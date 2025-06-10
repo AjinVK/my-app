@@ -172,8 +172,9 @@ const SignUp: React.FC<SignUpProps> = (props) => {
             sx={{
                 minHeight: "100vh",
                 display: "flex",
-                flexDirection: "column",
                 alignItems: "center",
+                justifyContent: "center",
+                flexDirection: "column",
                 backgroundImage:
                     "linear-gradient(159deg, rgba(131, 58, 180, 1) 0%, rgba(253, 29, 29, 1) 50%, rgba(252, 176, 69, 1) 100%)",
                 px: 2,

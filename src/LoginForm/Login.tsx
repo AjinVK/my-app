@@ -92,7 +92,7 @@ const Login: React.FC = () => {
           direction={{ xs: "column", sm: "row" }}
           spacing={0}
         >
-          <Grid size={{ xs: 12, sm: 6 }}>
+          <Grid size={{ xs: 12, sm: 6 }} p={1}>
             <CardContent>
               <Typography variant="h5" fontWeight={700} textAlign="center" mb={2}>
                 Login Form
@@ -104,7 +104,7 @@ const Login: React.FC = () => {
                     label="Email"
                     name="email"
                     variant="standard"
-                    size="small"                  
+                    size="small"
                     value={formData.email}
                     onChange={handleChange}
                     error={!!formData.emailError}
