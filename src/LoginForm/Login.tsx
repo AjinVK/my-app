@@ -91,7 +91,7 @@ const Login: React.FC = () => {
           width: { xs: "80%", md: "600px" },
           borderRadius: "16px",
           boxShadow: 6,
-          backgroundColor: "rgb(232, 242, 235)",
+          backgroundColor: "rgba(255, 255, 255, 0.92)",
         }}
       >
         <Grid
@@ -137,6 +137,20 @@ const Login: React.FC = () => {
                   />
                 </Box>
 
+                <Typography
+                  variant="body2"
+                  sx={{
+                    color: "#076653",
+                    textAlign: "right",
+                    cursor: "pointer",
+                    textDecoration: "underline",
+                    // mb: 1,
+                  }}
+                  onClick={() => navigate("/usermanagement/forgot-password")}
+                >
+                  Forgot Password?
+                </Typography>
+
                 <CardActions sx={{ flexDirection: "column", gap: 2 }}>
                   <Button
                     type="submit"
@@ -158,7 +172,7 @@ const Login: React.FC = () => {
                     variant="outlined"
                     sx={{
                       borderColor: "#076653", color: "#076653",
-                      mt: 2, fontWeight: "bold", borderRadius: "50px",
+                      mt: 1, fontWeight: "bold", borderRadius: "50px",
                       px: 3, py: 1.3,
                       "&:hover": {
                         backgroundColor: "#054d3e", color: "rgb(232, 242, 235)",
