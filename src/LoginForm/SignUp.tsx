@@ -31,21 +31,24 @@ const SignUp: React.FC<SignUpProps> = (props) => {
 
     const [isEditing, setIsEditing] = useState<boolean>(false);
 
-    const [formData, setFormData] = useState<User>({
+    const initialFormState: User = {
         firstName: "",
         lastName: "",
         email: "",
         password: "",
         confirmPassword: "",
-    });
+    };
 
-    const [errors, setErrors] = useState({
+    const initialErrorState = {
         firstName: "",
         lastName: "",
         email: "",
         password: "",
         confirmPassword: "",
-    });
+    };
+
+    const [formData, setFormData] = useState<User>(initialFormState);
+    const [errors, setErrors] = useState(initialErrorState);
 
     useEffect(() => {
         if (editingUser) {
@@ -82,7 +85,7 @@ const SignUp: React.FC<SignUpProps> = (props) => {
         if (!formData.lastName.trim()) {
             newErrors.lastName = "Last name is required";
             isValid = false;
-        } else if (!/^[a-zA-Z]+$/.test(formData.lastName)) {
+        } else if (!/^[a-zA-Z ]+$/.test(formData.lastName)) {
             newErrors.lastName = "Last name must contain only letters";
             isValid = false;
         }
@@ -122,8 +125,6 @@ const SignUp: React.FC<SignUpProps> = (props) => {
 
         if (!validateForm()) return;
         try {
-            await new Promise((resolve) => setTimeout(resolve, 1500)); 
-
             if (isEditing) {
                 onUpdateUser(formData);
                 alert("User updated successfully!");
@@ -132,20 +133,8 @@ const SignUp: React.FC<SignUpProps> = (props) => {
                 alert("Sign Up Successful!");
             }
 
-            setFormData({
-                firstName: "",
-                lastName: "",
-                email: "",
-                password: "",
-                confirmPassword: "",
-            });
-            setErrors({
-                firstName: "",
-                lastName: "",
-                email: "",
-                password: "",
-                confirmPassword: "",
-            });
+            setFormData(initialFormState);
+            setErrors(initialErrorState);
             setIsEditing(false);
 
             navigate("/usermanagement/usertable");
@@ -155,20 +144,8 @@ const SignUp: React.FC<SignUpProps> = (props) => {
     };
 
     const handleClear = () => {
-        setFormData({
-            firstName: "",
-            lastName: "",
-            email: "",
-            password: "",
-            confirmPassword: "",
-        });
-        setErrors({
-            firstName: "",
-            lastName: "",
-            email: "",
-            password: "",
-            confirmPassword: "",
-        });
+        setFormData(initialFormState);
+        setErrors(initialErrorState);
         setIsEditing(false);
     };
 
@@ -245,6 +222,7 @@ const SignUp: React.FC<SignUpProps> = (props) => {
                                 <TextField
                                     label="Email"
                                     name="email"
+                                    type="email"
                                     variant="standard"
                                     required
                                     fullWidth
@@ -326,7 +304,7 @@ const SignUp: React.FC<SignUpProps> = (props) => {
                         </CardContent>
                     </Grid>
                 </Grid>
-            </Card>           
+            </Card>
         </Box>
     );
 };
