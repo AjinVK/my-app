@@ -11,7 +11,7 @@ import {
   Grid,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import img from '../assets/image/stock_win.jpg'
+import img from '../assets/vite.svg';
 
 const Login: React.FC = () => {
   const [formData, setFormData] = useState({
