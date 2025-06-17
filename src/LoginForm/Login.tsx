@@ -133,7 +133,6 @@ const Login: React.FC = () => {
                     onChange={handleChange}
                     error={!!formData.passwordError}
                     helperText={formData.passwordError}
-
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">

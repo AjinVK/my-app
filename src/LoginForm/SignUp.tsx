@@ -6,10 +6,14 @@ import {
     CardActions,
     CardContent,
     Grid,
+    IconButton,
+    InputAdornment,
     TextField,
     Typography,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import VisibilityOutlined from '@mui/icons-material/VisibilityOutlined';
+import VisibilityOffOutlined from '@mui/icons-material/VisibilityOffOutlined';
 
 interface User {
     firstName: string;
@@ -148,6 +152,9 @@ const SignUp: React.FC<SignUpProps> = (props) => {
         setErrors(initialErrorState);
         setIsEditing(false);
     };
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
 
     return (
         <Box
@@ -235,11 +242,20 @@ const SignUp: React.FC<SignUpProps> = (props) => {
                                 />
                                 <TextField
                                     label="Password"
-                                    type="password"
                                     name="password"
                                     variant="standard"
+                                    type={showPassword ? 'text' : 'password'}
                                     required
                                     fullWidth
+                                    InputProps={{
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <IconButton onClick={() => setShowPassword((prev) => !prev)} edge="end">
+                                                    {showPassword ? <VisibilityOutlined /> : <VisibilityOffOutlined />}
+                                                </IconButton>
+                                            </InputAdornment>
+                                        ),
+                                    }}
                                     value={formData.password}
                                     onChange={handleChange}
                                     error={!!errors.password}
@@ -248,11 +264,20 @@ const SignUp: React.FC<SignUpProps> = (props) => {
                                 />
                                 <TextField
                                     label="Confirm Password"
-                                    type="password"
                                     name="confirmPassword"
                                     variant="standard"
+                                    type={showConfirmPassword ? 'text' : 'password'}
                                     required
                                     fullWidth
+                                    InputProps={{
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <IconButton onClick={() => setShowConfirmPassword((prev) => !prev)} edge="end">
+                                                    {showPassword ? <VisibilityOutlined /> : <VisibilityOffOutlined />}
+                                                </IconButton>
+                                            </InputAdornment>
+                                        ),
+                                    }}
                                     value={formData.confirmPassword}
                                     onChange={handleChange}
                                     error={!!errors.confirmPassword}
