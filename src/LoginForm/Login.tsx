@@ -9,7 +9,6 @@ import {
   TextField,
   Typography,
   Grid,
-  CircularProgress,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
@@ -21,14 +20,10 @@ const Login: React.FC = () => {
     passwordError: "",
   });
 
-  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSignUpClick = () => {
-    setIsLoading(true);
-    setTimeout(() => {
       navigate("/usermanagement/signup");
-    }, 1500);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -209,25 +204,6 @@ const Login: React.FC = () => {
           </Grid>
         </Grid>
       </Card>
-
-      {isLoading && (
-        <Box
-          sx={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "100vw",
-            height: "100vh",
-            backgroundColor: "rgba(0, 0, 0, 0.28)",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            zIndex: 9999,
-          }}
-        >
-          <CircularProgress size={70} thickness={3} color="inherit" />
-        </Box>
-      )}
     </Box>
   );
 };

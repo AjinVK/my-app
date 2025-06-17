@@ -5,7 +5,6 @@ import {
     Card,
     CardActions,
     CardContent,
-    CircularProgress,
     Grid,
     TextField,
     Typography,
@@ -31,7 +30,6 @@ const SignUp: React.FC<SignUpProps> = (props) => {
     const navigate = useNavigate();
 
     const [isEditing, setIsEditing] = useState<boolean>(false);
-    const [loading, setLoading] = useState<boolean>(false);
 
     const [formData, setFormData] = useState<User>({
         firstName: "",
@@ -123,9 +121,6 @@ const SignUp: React.FC<SignUpProps> = (props) => {
         e.preventDefault();
 
         if (!validateForm()) return;
-
-        setLoading(true);
-
         try {
             await new Promise((resolve) => setTimeout(resolve, 1500)); 
 
@@ -156,8 +151,6 @@ const SignUp: React.FC<SignUpProps> = (props) => {
             navigate("/usermanagement/usertable");
         } catch (error) {
             alert("Something went wrong!");
-        } finally {
-            setLoading(false);
         }
     };
 
@@ -333,26 +326,7 @@ const SignUp: React.FC<SignUpProps> = (props) => {
                         </CardContent>
                     </Grid>
                 </Grid>
-            </Card>
-
-            {loading && (
-                <Box
-                    sx={{
-                        position: "fixed",
-                        top: 0,
-                        left: 0,
-                        width: "100vw",
-                        height: "100vh",
-                        backgroundColor: "rgba(0, 0, 0, 0.28)",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        zIndex: 9999,
-                    }}
-                >
-                    <CircularProgress size={70} thickness={3} color="inherit" />
-                </Box>
-            )}
+            </Card>           
         </Box>
     );
 };

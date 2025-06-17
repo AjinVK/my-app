@@ -12,7 +12,6 @@ import {
     Typography,
     Paper,
     Button,
-    CircularProgress,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
@@ -31,7 +30,6 @@ interface TableFormProps {
 
 const TableForm: React.FC<TableFormProps> = ({ users, onDeleteUser }) => {
     const navigate = useNavigate();
-    const [isLoading, setIsLoading] = useState(false);
 
     const handleEdit = (user: User) => {
         navigate("/usermanagement/signup", { state: { user } });
@@ -42,10 +40,7 @@ const TableForm: React.FC<TableFormProps> = ({ users, onDeleteUser }) => {
     };
 
     const handleHomeClick = () => {
-        setIsLoading(true);
-        setTimeout(() => {
             navigate("/");
-        }, 1500);
     };
 
     return (
@@ -174,24 +169,6 @@ const TableForm: React.FC<TableFormProps> = ({ users, onDeleteUser }) => {
                     </Box>
                 </CardContent>
             </Card>
-            {isLoading && (
-                <Box
-                    sx={{
-                        position: "fixed",
-                        top: 0,
-                        left: 0,
-                        width: "100vw",
-                        height: "100vh",
-                        backgroundColor: "rgba(0, 0, 0, 0.28)",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        zIndex: 9999,
-                    }}
-                >
-                    <CircularProgress size={70} thickness={3} color="inherit" />
-                </Box>
-            )}
         </Box>
     );
 };

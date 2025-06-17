@@ -31,9 +31,8 @@ const ForgotPassword: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validateEmail()) {
-      // You can send a reset email request here (e.g. via API call)
       alert("Password reset link sent to your email.");
-      navigate("/"); // or navigate back to login
+      navigate("/");
     }
   };
 
