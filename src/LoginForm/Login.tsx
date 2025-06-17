@@ -9,9 +9,13 @@ import {
   TextField,
   Typography,
   Grid,
+  InputAdornment,
+  IconButton,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import img from '../assets/vite.svg';
+import VisibilityOutlined from '@mui/icons-material/VisibilityOutlined';
+import VisibilityOffOutlined from '@mui/icons-material/VisibilityOffOutlined';
 
 const Login: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -24,7 +28,7 @@ const Login: React.FC = () => {
   const navigate = useNavigate();
 
   const handleSignUpClick = () => {
-      navigate("/usermanagement/signup");
+    navigate("/usermanagement/signup");
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -70,6 +74,7 @@ const Login: React.FC = () => {
       });
     }
   };
+  const [showPassword, setShowPassword] = useState(false);
 
   return (
     <Box
@@ -128,6 +133,16 @@ const Login: React.FC = () => {
                     onChange={handleChange}
                     error={!!formData.passwordError}
                     helperText={formData.passwordError}
+                    
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton onClick={() => setShowPassword((prev) => !prev)} edge="end">
+                          {showPassword ? <VisibilityOutlined /> : <VisibilityOffOutlined />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
                     fullWidth
                     required
                   />
