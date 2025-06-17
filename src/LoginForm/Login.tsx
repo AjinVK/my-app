@@ -192,7 +192,7 @@ const Login: React.FC = () => {
           >
             <CardMedia
               component="img"
-              image="/vite.svg"
+              image="./vite.svg"
               alt="Illustration"
               sx={{
                 width: { xs: "150px", sm: "200px" },
