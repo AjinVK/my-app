@@ -125,24 +125,24 @@ const Login: React.FC = () => {
                 <Box mb={2}>
                   <TextField
                     label="Password"
-                    type="password"
                     name="password"
                     variant="standard"
                     size="small"
+                    type={showPassword ? 'text' : 'password'}
                     value={formData.password}
                     onChange={handleChange}
                     error={!!formData.passwordError}
                     helperText={formData.passwordError}
-                    
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton onClick={() => setShowPassword((prev) => !prev)} edge="end">
-                          {showPassword ? <VisibilityOutlined /> : <VisibilityOffOutlined />}
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
+
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton onClick={() => setShowPassword((prev) => !prev)} edge="end">
+                            {showPassword ? <VisibilityOutlined /> : <VisibilityOffOutlined />}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
                     fullWidth
                     required
                   />
