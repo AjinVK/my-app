@@ -57,6 +57,7 @@ const ForgotPassword: React.FC = () => {
             <TextField
               label="Email"
               variant="standard"
+              type="email"
               fullWidth
               value={email}
               onChange={(e) => setEmail(e.target.value)}
