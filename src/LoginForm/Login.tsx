@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -19,6 +19,10 @@ import VisibilityOffOutlined from '@mui/icons-material/VisibilityOffOutlined';
 import './style.css';
 
 const Login: React.FC = () => {
+   useEffect(() => {
+    document.title = "Login - My App";
+  }, []);
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -29,7 +33,7 @@ const Login: React.FC = () => {
   const navigate = useNavigate();
 
   const handleSignUpClick = () => {
-    navigate("/usermanagement/signup");
+    navigate("/signup");
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -160,7 +164,7 @@ const Login: React.FC = () => {
                     textDecoration: "underline",
                     // mb: 1,
                   }}
-                  onClick={() => navigate("/usermanagement/forgot-password")}
+                  onClick={() => navigate("/forgot-password")}
                 >
                   Forgot Password?
                 </Typography>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
     Box,
     Card,
@@ -29,6 +29,10 @@ interface TableFormProps {
 }
 
 const TableForm: React.FC<TableFormProps> = ({ users, onDeleteUser }) => {
+     useEffect(() => {
+        document.title = "UserTable - My App";
+      }, []);
+      
     const navigate = useNavigate();
 
     const handleEdit = (user: User) => {

@@ -55,9 +55,11 @@ const SignUp: React.FC<SignUpProps> = (props) => {
     const [formData, setFormData] = useState<User>(initialFormState);
     const [errors, setErrors] = useState(initialErrorState);
 
-    useEffect(() => {
+    useEffect(() => {        
+    document.title = "SignUp - My App";
         if (editingUser) {
             setFormData(editingUser);
+             document.title = "EditingUser - My App";
             setIsEditing(true);
         } else {
             setIsEditing(false);
@@ -142,7 +144,7 @@ const SignUp: React.FC<SignUpProps> = (props) => {
             setErrors(initialErrorState);
             setIsEditing(false);
 
-            navigate("/usermanagement/usertable");
+            navigate("/usertable");
         } catch (error) {
             alert("Something went wrong!");
         }
