@@ -15,7 +15,6 @@ const UserManagement: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
   const location = useLocation();
 
-  // If navigating with a user object to edit, get it from state
   const editingUser: User | null = location.state?.user || null;
 
   const addUser = (newUser: User) => {
