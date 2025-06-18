@@ -55,17 +55,6 @@ const SignUp: React.FC<SignUpProps> = (props) => {
     const [formData, setFormData] = useState<User>(initialFormState);
     const [errors, setErrors] = useState(initialErrorState);
 
-    useEffect(() => {        
-    document.title = "SignUp - My App";
-        if (editingUser) {
-            setFormData(editingUser);
-             document.title = "EditingUser - My App";
-            setIsEditing(true);
-        } else {
-            setIsEditing(false);
-        }
-    }, [editingUser]);
-
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
@@ -150,14 +139,25 @@ const SignUp: React.FC<SignUpProps> = (props) => {
         }
     };
 
+    useEffect(() => {
+        document.title = "SignUp - My App";
+        if (editingUser) {
+            setFormData(editingUser);
+            setIsEditing(true);
+            document.title = "EditingUser - My App";
+        } else {
+            setIsEditing(false);
+        }
+    }, [editingUser]);
+
     const handleClear = () => {
         setFormData(initialFormState);
         setErrors(initialErrorState);
         setIsEditing(false);
+        document.title = "SignUp - My App";
     };
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
 
     return (
         <Box
@@ -258,7 +258,7 @@ const SignUp: React.FC<SignUpProps> = (props) => {
                                         endAdornment: (
                                             <InputAdornment position="end">
                                                 <IconButton onClick={() => setShowPassword((prev) => !prev)}
-                                                 edge="end" className="signup-icon-button">
+                                                    edge="end" className="signup-icon-button">
                                                     {showPassword ? <VisibilityOutlined /> : <VisibilityOffOutlined />}
                                                 </IconButton>
                                             </InputAdornment>
