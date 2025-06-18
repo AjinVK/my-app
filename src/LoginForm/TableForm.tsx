@@ -67,7 +67,7 @@ const TableForm: React.FC<TableFormProps> = ({ users, onDeleteUser }) => {
                     <Typography
                         variant="h4"
                         sx={{ fontWeight: "bold", textAlign: "center", mb: 3 }}
-                        color="rgba(92, 8, 109, 0.78)"
+                        color="rgba(71, 1, 85, 0.78)"
                         fontSize={{ xs: "1.5rem", sm: "2rem", md: "2.5rem" }}
                     >
                         Registered User Details

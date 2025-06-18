@@ -16,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 import img from '../assets/vite.svg';
 import VisibilityOutlined from '@mui/icons-material/VisibilityOutlined';
 import VisibilityOffOutlined from '@mui/icons-material/VisibilityOffOutlined';
+import './style.css';
 
 const Login: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -113,6 +114,7 @@ const Login: React.FC = () => {
                     name="email"
                     variant="standard"
                     size="small"
+                    className="login-field"
                     value={formData.email}
                     onChange={handleChange}
                     error={!!formData.emailError}
@@ -128,15 +130,17 @@ const Login: React.FC = () => {
                     name="password"
                     variant="standard"
                     size="small"
+                    className="login-field"
                     type={showPassword ? 'text' : 'password'}
                     value={formData.password}
                     onChange={handleChange}
                     error={!!formData.passwordError}
-                    helperText={formData.passwordError}
+                    helperText={formData.passwordError} 
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">
-                          <IconButton onClick={() => setShowPassword((prev) => !prev)} edge="end">
+                          <IconButton onClick={() => setShowPassword((prev) => !prev)}
+                            edge="end" className="login-icon-button">
                             {showPassword ? <VisibilityOutlined /> : <VisibilityOffOutlined />}
                           </IconButton>
                         </InputAdornment>

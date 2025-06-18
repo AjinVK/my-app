@@ -50,7 +50,7 @@ const ForgotPassword: React.FC = () => {
       <Card sx={{ maxWidth: 400, p: 3, borderRadius: 4,
           backgroundColor: "rgba(255, 255, 255, 0.92)", }}>
         <CardContent>
-          <Typography variant="h5" textAlign="center" fontWeight={700} mb={3}>
+          <Typography variant="h5" textAlign="center" fontWeight={700} mb={3} color="rgb(5, 74, 60)">
             Forgot Password
           </Typography>
 

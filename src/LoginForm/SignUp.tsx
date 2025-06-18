@@ -14,6 +14,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import VisibilityOutlined from '@mui/icons-material/VisibilityOutlined';
 import VisibilityOffOutlined from '@mui/icons-material/VisibilityOffOutlined';
+import './style.css';
 
 interface User {
     firstName: string;
@@ -196,7 +197,7 @@ const SignUp: React.FC<SignUpProps> = (props) => {
                                 variant="h5"
                                 textAlign={"center"}
                                 mb={2}
-                                color="rgb(164, 20, 20)"
+                                color="rgb(108, 0, 0)"
                             >
                                 {isEditing ? "Edit User" : "Sign Up"}
                             </Typography>
@@ -208,6 +209,7 @@ const SignUp: React.FC<SignUpProps> = (props) => {
                                     variant="standard"
                                     required
                                     fullWidth
+                                    className="signup-password-field"
                                     value={formData.firstName}
                                     onChange={handleChange}
                                     error={!!errors.firstName}
@@ -220,6 +222,7 @@ const SignUp: React.FC<SignUpProps> = (props) => {
                                     variant="standard"
                                     required
                                     fullWidth
+                                    className="signup-password-field"
                                     value={formData.lastName}
                                     onChange={handleChange}
                                     error={!!errors.lastName}
@@ -233,6 +236,7 @@ const SignUp: React.FC<SignUpProps> = (props) => {
                                     variant="standard"
                                     required
                                     fullWidth
+                                    className="signup-password-field"
                                     value={formData.email}
                                     onChange={handleChange}
                                     error={!!errors.email}
@@ -247,10 +251,12 @@ const SignUp: React.FC<SignUpProps> = (props) => {
                                     type={showPassword ? 'text' : 'password'}
                                     required
                                     fullWidth
+                                    className="signup-password-field"
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
-                                                <IconButton onClick={() => setShowPassword((prev) => !prev)} edge="end">
+                                                <IconButton onClick={() => setShowPassword((prev) => !prev)}
+                                                 edge="end" className="signup-icon-button">
                                                     {showPassword ? <VisibilityOutlined /> : <VisibilityOffOutlined />}
                                                 </IconButton>
                                             </InputAdornment>
@@ -269,11 +275,13 @@ const SignUp: React.FC<SignUpProps> = (props) => {
                                     type={showConfirmPassword ? 'text' : 'password'}
                                     required
                                     fullWidth
+                                    className="signup-password-field"
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
-                                                <IconButton onClick={() => setShowConfirmPassword((prev) => !prev)} edge="end">
-                                                    {showPassword ? <VisibilityOutlined /> : <VisibilityOffOutlined />}
+                                                <IconButton onClick={() => setShowConfirmPassword((prev) => !prev)}
+                                                    edge="end" className="signup-icon-button">
+                                                    {showConfirmPassword ? <VisibilityOutlined /> : <VisibilityOffOutlined />}
                                                 </IconButton>
                                             </InputAdornment>
                                         ),
@@ -291,15 +299,19 @@ const SignUp: React.FC<SignUpProps> = (props) => {
                                         variant="contained"
                                         sx={{
                                             ml: 1,
-                                            backgroundColor: "black",
-                                            color: "white",
                                             mt: 1,
-                                            fontWeight: "bold",
                                             px: 2.5,
                                             py: 1,
+                                            fontSize: "1rem",
+                                            backgroundColor: "rgba(123, 6, 6, 0.96)",
+                                            color: "#fff",
+                                            fontWeight: "600",
+                                            borderRadius: "7px",
+                                            textTransform: "none",
+                                            transition: "all 0.3s ease-in-out",
                                             "&:hover": {
-                                                backgroundColor: "rgb(0, 0, 0)",
-                                                color: "rgb(232, 242, 235)",
+                                                backgroundColor: "rgb(111, 2, 2)",
+                                                color: "rgba(255, 255, 255, 0.95)",
                                             },
                                         }}
                                     >
@@ -309,15 +321,18 @@ const SignUp: React.FC<SignUpProps> = (props) => {
                                         type="button"
                                         variant="outlined"
                                         sx={{
-                                            borderColor: "black",
-                                            color: "black",
+                                            borderColor: "rgba(123, 6, 6, 0.96)",
+                                            color: "rgba(123, 6, 6, 0.96)",
+                                            ml: 1,
                                             mt: 1,
-                                            fontWeight: "bold",
                                             px: 2.5,
                                             py: 1,
+                                            fontSize: "1rem",
+                                            fontWeight: "600",
+                                            borderRadius: "7px",
                                             "&:hover": {
-                                                backgroundColor: "black",
-                                                color: "rgb(232, 242, 235)",
+                                                backgroundColor: "rgb(111, 2, 2)",
+                                                color: "rgba(255, 255, 255, 0.95)",
                                             },
                                         }}
                                         onClick={handleClear}
