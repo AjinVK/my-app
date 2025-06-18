@@ -36,7 +36,7 @@ const TableForm: React.FC<TableFormProps> = ({ users, onDeleteUser }) => {
     const navigate = useNavigate();
 
     const handleEdit = (user: User) => {
-        navigate("/usermanagement/signup", { state: { user } });
+        navigate("/signup", { state: { user } });
     };
 
     const handleDelete = (email: string) => {
