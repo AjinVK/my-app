@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -8,11 +8,16 @@ import {
   CardContent,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import './style.css';
 
 const ForgotPassword: React.FC = () => {
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
   const navigate = useNavigate();
+
+   useEffect(() => {
+      document.title = "ForgotPassword - My App";
+    }, []);
 
   const validateEmail = () => {
     if (!email.trim()) {
@@ -47,8 +52,10 @@ const ForgotPassword: React.FC = () => {
         backgroundImage: "linear-gradient(to right,#e2ef26,#076653,#0c342c)",
       }}
     >
-      <Card sx={{ maxWidth: 400, p: 3, borderRadius: 4,
-          backgroundColor: "rgba(255, 255, 255, 0.92)", }}>
+      <Card sx={{
+        maxWidth: 400, p: 3, borderRadius: 4,
+        backgroundColor: "rgba(255, 255, 255, 0.92)",
+      }}>
         <CardContent>
           <Typography variant="h5" textAlign="center" fontWeight={700} mb={3} color="rgb(5, 74, 60)">
             Forgot Password
@@ -59,6 +66,7 @@ const ForgotPassword: React.FC = () => {
               label="Email"
               variant="standard"
               type="email"
+              className="login-field"
               fullWidth
               value={email}
               onChange={(e) => setEmail(e.target.value)}
