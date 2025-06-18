@@ -42,6 +42,7 @@ const UserManagement: React.FC = () => {
             onSubmitUser={addUser}
             onUpdateUser={updateUser}
             editingUser={editingUser}
+            registeredUsers={users}
           />
         }
       />

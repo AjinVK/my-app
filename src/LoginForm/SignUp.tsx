@@ -28,10 +28,11 @@ interface SignUpProps {
     onSubmitUser: (user: User) => void;
     onUpdateUser: (user: User) => void;
     editingUser?: User | null;
+    registeredUsers: User[];
 }
 
 const SignUp: React.FC<SignUpProps> = (props) => {
-    const { onSubmitUser, onUpdateUser, editingUser } = props;
+    const { onSubmitUser, onUpdateUser, editingUser, registeredUsers } = props;
     const navigate = useNavigate();
 
     const [isEditing, setIsEditing] = useState<boolean>(false);
@@ -94,12 +95,18 @@ const SignUp: React.FC<SignUpProps> = (props) => {
         ) {
             newErrors.email = "Enter a valid email";
             isValid = false;
+        } else if (
+            !isEditing &&
+            registeredUsers.some((user) => user.email.toLowerCase() === formData.email.toLowerCase())
+        ) {
+            newErrors.email = "Email already exists";
+            isValid = false;
         }
 
         if (!formData.password) {
             newErrors.password = "Password is required";
             isValid = false;
-        } else if (formData.password.length < 6) {
+        } else if (formData.password.length < 3) {
             newErrors.password = "Password must be at least 6 characters";
             isValid = false;
         }
