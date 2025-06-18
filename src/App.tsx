@@ -1,19 +1,21 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './LoginForm/Login';
 import UserManagement from './LoginForm/UserManagement';
 import ForgotPassword from './LoginForm/ForgotPassword';
+import './LoginForm/style.css';
 
 const App: React.FC = () => {
   return (
-    <BrowserRouter>
+    <Router>
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/usermanagement/*" element={<UserManagement />} />
         <Route path="/usermanagement/forgot-password" element={<ForgotPassword />} />
         <Route path="*" element={<Login />} />
       </Routes>
-    </BrowserRouter>
+    </Router>
+
   );
 };
 
