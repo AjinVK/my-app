@@ -47,7 +47,8 @@ const ForgotPassword: React.FC = () => {
         backgroundImage: "linear-gradient(to right,#e2ef26,#076653,#0c342c)",
       }}
     >
-      <Card sx={{ maxWidth: 400, p: 3, borderRadius: 4 }}>
+      <Card sx={{ maxWidth: 400, p: 3, borderRadius: 4,
+          backgroundColor: "rgba(255, 255, 255, 0.92)", }}>
         <CardContent>
           <Typography variant="h5" textAlign="center" fontWeight={700} mb={3}>
             Forgot Password
