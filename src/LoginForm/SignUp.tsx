@@ -14,6 +14,11 @@ import {
 import { useNavigate } from "react-router-dom";
 import VisibilityOutlined from '@mui/icons-material/VisibilityOutlined';
 import VisibilityOffOutlined from '@mui/icons-material/VisibilityOffOutlined';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import ReportProblemOutlinedIcon from '@mui/icons-material/ReportProblemOutlined';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import CheckIcon from '@mui/icons-material/Check';
+import CloseIcon from '@mui/icons-material/Close';
 import './style.css';
 
 interface User {
@@ -166,6 +171,25 @@ const SignUp: React.FC<SignUpProps> = (props) => {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+    const getPasswordStrength = (password: string) => {
+        let score = 0;
+        if (password.length >= 8) score++;
+        if (/[A-Z]/.test(password)) score++;
+        if (/[0-9]/.test(password)) score++;
+        if (/[^A-Za-z0-9]/.test(password)) score++;
+
+        if (score <= 1) return { label: "Weak", value: 33, color: "error" };
+        if (score === 2 || score === 3) return { label: "Medium", value: 66, color: "warning" };
+        return { label: "Strong", value: 100, color: "success" };
+    };
+
+    const passwordStrength = getPasswordStrength(formData.password);
+    const strengthIcon = {
+        error: <ErrorOutlineIcon fontSize="small" />,
+        warning: <ReportProblemOutlinedIcon fontSize="small" />,
+        success: <CheckCircleOutlineIcon fontSize="small" />,
+    }[passwordStrength.color as 'error' | 'warning' | 'success'];
+
     return (
         <Box
             sx={{
@@ -277,6 +301,63 @@ const SignUp: React.FC<SignUpProps> = (props) => {
                                     helperText={errors.password}
                                     sx={{ mb: 2 }}
                                 />
+                                {formData.password && (
+                                    <Box sx={{ mt: 2 }}>
+                                        {/* Strength Badge */}
+                                        <Box
+                                            sx={{
+                                                display: 'inline-flex',
+                                                alignItems: 'center',
+                                                px: 1.5,
+                                                py: 0.5,
+                                                gap: 1,
+                                                borderRadius: 2,
+                                                fontWeight: 600,
+                                                fontSize: '0.75rem',
+                                                textTransform: 'uppercase',
+                                                backgroundColor: (theme) => theme.palette[passwordStrength.color as 'error' | 'warning' | 'success'].main + '22',
+                                                color: (theme) => theme.palette[passwordStrength.color as 'error' | 'warning' | 'success'].main,
+                                            }}
+                                        >
+                                            {strengthIcon}
+                                            Strength: {passwordStrength.label}
+                                        </Box>
+
+                                        {/* Password Requirements */}
+                                        <Box sx={{ mt: 1.5, pl: 0.5 }}>
+                                            {[
+                                                {
+                                                    label: 'At least 8 characters',
+                                                    valid: formData.password.length >= 8,
+                                                },
+                                                {
+                                                    label: 'Includes a number',
+                                                    valid: /[0-9]/.test(formData.password),
+                                                },
+                                                {
+                                                    label: 'Includes an uppercase letter',
+                                                    valid: /[A-Z]/.test(formData.password),
+                                                },
+                                                {
+                                                    label: 'Includes a symbol',
+                                                    valid: /[^A-Za-z0-9]/.test(formData.password),
+                                                },
+                                            ].map((item, idx) => (
+                                                <Box key={idx} sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
+                                                    {item.valid ? (
+                                                        <CheckIcon fontSize="small" color="success" />
+                                                    ) : (
+                                                        <CloseIcon fontSize="small" color="disabled" />
+                                                    )}
+                                                    <Typography variant="caption" color={item.valid ? 'success.main' : 'text.secondary'}>
+                                                        {item.label}
+                                                    </Typography>
+                                                </Box>
+                                            ))}
+                                        </Box>
+                                    </Box>
+                                )}
+
                                 <TextField
                                     label="Confirm Password"
                                     name="confirmPassword"
