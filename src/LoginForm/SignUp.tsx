@@ -14,11 +14,9 @@ import {
 import { useNavigate } from "react-router-dom";
 import VisibilityOutlined from '@mui/icons-material/VisibilityOutlined';
 import VisibilityOffOutlined from '@mui/icons-material/VisibilityOffOutlined';
-import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
-import ReportProblemOutlinedIcon from '@mui/icons-material/ReportProblemOutlined';
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
+import { motion, AnimatePresence } from 'framer-motion';
 import './style.css';
 
 interface User {
@@ -61,7 +59,7 @@ const SignUp: React.FC<SignUpProps> = (props) => {
     const [formData, setFormData] = useState<User>(initialFormState);
     const [errors, setErrors] = useState(initialErrorState);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
     };
@@ -168,8 +166,10 @@ const SignUp: React.FC<SignUpProps> = (props) => {
         setIsEditing(false);
         document.title = "SignUp - My App";
     };
+    const [showStrengthPopup, setShowStrengthPopup] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [showStrengthHint, setShowStrengthHint] = useState(false);
 
     const getPasswordStrength = (password: string) => {
         let score = 0;
@@ -184,11 +184,7 @@ const SignUp: React.FC<SignUpProps> = (props) => {
     };
 
     const passwordStrength = getPasswordStrength(formData.password);
-    const strengthIcon = {
-        error: <ErrorOutlineIcon fontSize="small" />,
-        warning: <ReportProblemOutlinedIcon fontSize="small" />,
-        success: <CheckCircleOutlineIcon fontSize="small" />,
-    }[passwordStrength.color as 'error' | 'warning' | 'success'];
+
 
     return (
         <Box
@@ -207,11 +203,13 @@ const SignUp: React.FC<SignUpProps> = (props) => {
         >
             <Card
                 sx={{
-                    width: "100%",
-                    maxWidth: "400px",
+                    width: { xs: '90%', sm: '60%', md: '400px', },
+                    minHeight: { xs: 'auto', sm: 'auto', md: 'auto', },
+                    maxHeight: { xs: 'none', sm: 'none', md: '90vh', },
                     borderRadius: "16px",
                     boxShadow: 6,
                     backgroundColor: "rgb(237, 237, 237)",
+                    mx: "auto",
                 }}
             >
                 <Grid container>
@@ -277,87 +275,118 @@ const SignUp: React.FC<SignUpProps> = (props) => {
                                     sx={{ mb: 2 }}
                                     disabled={isEditing}
                                 />
-                                <TextField
-                                    label="Password"
-                                    name="password"
-                                    variant="standard"
-                                    type={showPassword ? 'text' : 'password'}
-                                    required
-                                    fullWidth
-                                    className="signup-password-field"
-                                    InputProps={{
-                                        endAdornment: (
-                                            <InputAdornment position="end">
-                                                <IconButton onClick={() => setShowPassword((prev) => !prev)}
-                                                    edge="end" className="signup-icon-button">
-                                                    {showPassword ? <VisibilityOutlined /> : <VisibilityOffOutlined />}
-                                                </IconButton>
-                                            </InputAdornment>
-                                        ),
-                                    }}
-                                    value={formData.password}
-                                    onChange={handleChange}
-                                    error={!!errors.password}
-                                    helperText={errors.password}
-                                    sx={{ mb: 2 }}
-                                />
-                                {formData.password && (
-                                    <Box sx={{ mt: 2 }}>
-                                        {/* Strength Badge */}
-                                        <Box
-                                            sx={{
-                                                display: 'inline-flex',
-                                                alignItems: 'center',
-                                                px: 1.5,
-                                                py: 0.5,
-                                                gap: 1,
-                                                borderRadius: 2,
-                                                fontWeight: 600,
-                                                fontSize: '0.75rem',
-                                                textTransform: 'uppercase',
-                                                backgroundColor: (theme) => theme.palette[passwordStrength.color as 'error' | 'warning' | 'success'].main + '22',
-                                                color: (theme) => theme.palette[passwordStrength.color as 'error' | 'warning' | 'success'].main,
-                                            }}
-                                        >
-                                            {strengthIcon}
-                                            Strength: {passwordStrength.label}
-                                        </Box>
+                                <Box sx={{ position: 'relative' }}>
+                                    <TextField
+                                        label="Password"
+                                        name="password"
+                                        variant="standard"
+                                        type={showPassword ? 'text' : 'password'}
+                                        required
+                                        fullWidth
+                                        onFocus={() => setShowStrengthHint(true)}
+                                        onBlur={() => setTimeout(() => setShowStrengthHint(false), 150)}
+                                        className="signup-password-field"
+                                        value={formData.password}
+                                        onChange={(e) => {
+                                            handleChange(e);
+                                            setShowStrengthHint(true);
+                                        }}
+                                        error={!!errors.password}
+                                        helperText={errors.password}
+                                        InputProps={{
+                                            endAdornment: (
+                                                <InputAdornment position="end">
+                                                    <IconButton onClick={() => setShowPassword(prev => !prev)}
+                                                        edge="end" className="signup-icon-button">
+                                                        {showPassword ? <VisibilityOutlined /> : <VisibilityOffOutlined />}
+                                                    </IconButton>
+                                                </InputAdornment>
+                                            ),
+                                        }}
+                                        sx={{ mb: 0.5 }}
+                                    />
 
-                                        {/* Password Requirements */}
-                                        <Box sx={{ mt: 1.5, pl: 0.5 }}>
-                                            {[
-                                                {
-                                                    label: 'At least 8 characters',
-                                                    valid: formData.password.length >= 8,
-                                                },
-                                                {
-                                                    label: 'Includes a number',
-                                                    valid: /[0-9]/.test(formData.password),
-                                                },
-                                                {
-                                                    label: 'Includes an uppercase letter',
-                                                    valid: /[A-Z]/.test(formData.password),
-                                                },
-                                                {
-                                                    label: 'Includes a symbol',
-                                                    valid: /[^A-Za-z0-9]/.test(formData.password),
-                                                },
-                                            ].map((item, idx) => (
-                                                <Box key={idx} sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
-                                                    {item.valid ? (
-                                                        <CheckIcon fontSize="small" color="success" />
-                                                    ) : (
-                                                        <CloseIcon fontSize="small" color="disabled" />
-                                                    )}
-                                                    <Typography variant="caption" color={item.valid ? 'success.main' : 'text.secondary'}>
-                                                        {item.label}
-                                                    </Typography>
+                                    <AnimatePresence>
+                                        {showStrengthHint && formData.password && (
+                                            <motion.div
+                                                initial={{ opacity: 0, y: -10 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                exit={{ opacity: 0, y: -10 }}
+                                                transition={{ duration: 0.3, ease: 'easeInOut' }}
+                                            >
+                                                <Box sx={{ mt: 1 }}>
+                                                    <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 0.5 }}>
+                                                        <Typography
+                                                            variant="caption"
+                                                            sx={{
+                                                                fontWeight: 600,
+                                                                color: (theme) => {
+                                                                    const colorMap = {
+                                                                        error: theme.palette.error.main,
+                                                                        warning: theme.palette.warning.main,
+                                                                        success: theme.palette.success.main,
+                                                                    };
+                                                                    return colorMap[passwordStrength.color as 'error' | 'warning' | 'success'];
+                                                                }
+                                                            }}
+                                                        >
+                                                            Strength: {passwordStrength.label}
+                                                        </Typography>
+                                                        <Typography variant="caption" sx={{ color: '#666' }}>
+                                                            {passwordStrength.value}%
+                                                        </Typography>
+                                                    </Box>
+
+                                                    <Box
+                                                        sx={{
+                                                            height: 8,
+                                                            borderRadius: 4,
+                                                            backgroundColor: '#e0e0e0',
+                                                            overflow: 'hidden',
+                                                        }}
+                                                    >
+                                                        <Box
+                                                            sx={{
+                                                                height: '100%',
+                                                                width: `${passwordStrength.value}%`,
+                                                                background: (theme) => {
+                                                                    if (passwordStrength.color === 'error') return theme.palette.error.main;
+                                                                    if (passwordStrength.color === 'warning') return 'linear-gradient(to right, #FF9800, #FFC107)';
+                                                                    return 'linear-gradient(to right, #43a047, #66bb6a)';
+                                                                },
+                                                                transition: 'width 0.3s ease-in-out',
+                                                            }}
+                                                        />
+                                                    </Box>
+
+                                                    <Box sx={{ mt: 1 }}>
+                                                        {[
+                                                            { label: 'At least 8 characters', valid: formData.password.length >= 8 },
+                                                            { label: 'One number', valid: /\d/.test(formData.password) },
+                                                            { label: 'One uppercase letter', valid: /[A-Z]/.test(formData.password) },
+                                                            { label: 'One special character', valid: /[^A-Za-z0-9]/.test(formData.password) },
+                                                        ].map((rule, idx) => (
+                                                            <Box key={idx} sx={{ display: 'flex', alignItems: 'center', mb: 0.5 }}>
+                                                                {rule.valid ? (
+                                                                    <CheckIcon fontSize="small" color="success" />
+                                                                ) : (
+                                                                    <CloseIcon fontSize="small" color="disabled" />
+                                                                )}
+                                                                <Typography
+                                                                    variant="caption"
+                                                                    sx={{ ml: 1, color: rule.valid ? 'success.main' : 'text.secondary' }}
+                                                                >
+                                                                    {rule.label}
+                                                                </Typography>
+                                                            </Box>
+                                                        ))}
+                                                    </Box>
                                                 </Box>
-                                            ))}
-                                        </Box>
-                                    </Box>
-                                )}
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
 
+                                </Box>
                                 <TextField
                                     label="Confirm Password"
                                     name="confirmPassword"
