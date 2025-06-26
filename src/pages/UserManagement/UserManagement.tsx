@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
-import SignUp from "./SignUp";
-import TableForm from "./TableForm";
+import { SignUp } from "../SignUp";
+import TableForm from "../UserTable/TableForm";
 
 interface User {
   firstName: string;

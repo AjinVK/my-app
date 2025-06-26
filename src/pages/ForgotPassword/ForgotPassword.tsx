@@ -8,7 +8,6 @@ import {
   CardContent,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import './style.css';
 
 const ForgotPassword: React.FC = () => {
   const [email, setEmail] = useState("");

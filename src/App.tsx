@@ -1,9 +1,8 @@
 import React from 'react';
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
-import Login from './LoginForm/Login';
-import UserManagement from './LoginForm/UserManagement';
-import ForgotPassword from './LoginForm/ForgotPassword';
-import './LoginForm/style.css';
+import Login from './pages/LoginForm/Login';
+import { UserManagement } from './pages/UserManagement';
+import { ForgotPassword } from './pages/ForgotPassword';
 
 const App: React.FC = () => {
   return (

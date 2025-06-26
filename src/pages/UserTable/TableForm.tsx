@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import {
     Box,
-    Card,
     CardContent,
     Table,
     TableBody,
@@ -14,6 +13,8 @@ import {
     Button,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { CustomButton, CommonBox, CommonCard } from '../../components/common';
+import './style.css';
 
 interface User {
     firstName: string;
@@ -29,10 +30,10 @@ interface TableFormProps {
 }
 
 const TableForm: React.FC<TableFormProps> = ({ users, onDeleteUser }) => {
-     useEffect(() => {
+    useEffect(() => {
         document.title = "UserTable - My App";
-      }, []);
-      
+    }, []);
+
     const navigate = useNavigate();
 
     const handleEdit = (user: User) => {
@@ -44,29 +45,12 @@ const TableForm: React.FC<TableFormProps> = ({ users, onDeleteUser }) => {
     };
 
     const handleHomeClick = () => {
-            navigate("/");
+        navigate("/");
     };
 
     return (
-        <Box
-            sx={{
-                minHeight: "100vh",
-                backgroundImage:
-                    "linear-gradient(to right,rgba(78, 38, 239, 0.69),rgba(86, 7, 102, 0.71))",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                p: 4,
-            }}
-        >
-            <Card
-                sx={{
-                    width: "100%",
-                    maxWidth: 800,
-                    boxShadow: 8,
-                    borderRadius: 4,
-                }}
-            >
+        <CommonBox variant="dashboard" sx={{ p: 4 }}>
+            <CommonCard cardType="table">
                 <CardContent>
                     <Typography
                         variant="h4"
@@ -77,31 +61,28 @@ const TableForm: React.FC<TableFormProps> = ({ users, onDeleteUser }) => {
                         Registered User Details
                     </Typography>
 
-                    <TableContainer component={Paper} sx={{ borderRadius: 2 }}>
-                        <Table sx={{ minWidth: 650 }} size="medium">
-                            <TableHead sx={{ backgroundColor: "rgba(72, 49, 134, 0.93)" }}>
-                                <TableRow>
-                                    <TableCell sx={{ color: "white", fontWeight: "bold" }}>
-                                        First Name
-                                    </TableCell>
-                                    <TableCell sx={{ color: "white", fontWeight: "bold" }}>
-                                        Last Name
-                                    </TableCell>
-                                    <TableCell sx={{ color: "white", fontWeight: "bold" }}>
-                                        Email
-                                    </TableCell>
-                                    <TableCell sx={{ color: "white", fontWeight: "bold" }}>
-                                        Password
-                                    </TableCell>
-                                    <TableCell sx={{ color: "white", fontWeight: "bold" }}>
-                                        Actions
-                                    </TableCell>
+                    <TableContainer component={Paper} sx={{ borderRadius: 3, boxShadow: 3 }}>
+                        <Table sx={{ minWidth: 700 }} size="medium">
+                            <TableHead>
+                                <TableRow sx={{ backgroundColor: "rgba(72, 49, 134, 0.93)" }}>
+                                    {["First Name", "Last Name", "Email", "Password", "Actions"].map((header) => (
+                                        <TableCell key={header} sx={{ color: "#fff", fontWeight: 600 }}>
+                                            {header}
+                                        </TableCell>
+                                    ))}
                                 </TableRow>
                             </TableHead>
                             <TableBody>
                                 {users.length > 0 ? (
                                     users.map((user, index) => (
-                                        <TableRow key={index}>
+                                        <TableRow key={index}
+                                            sx={{
+                                                backgroundColor: "rgba(243, 239, 255, 0.6)",
+                                                "&:hover": {
+                                                    backgroundColor: "rgba(224, 213, 255, 0.7)",
+                                                },
+                                            }}
+                                        >
                                             <TableCell>{user.firstName}</TableCell>
                                             <TableCell>{user.lastName}</TableCell>
                                             <TableCell>{user.email}</TableCell>
@@ -114,10 +95,10 @@ const TableForm: React.FC<TableFormProps> = ({ users, onDeleteUser }) => {
                                                     sx={{
                                                         mr: 1,
                                                         fontWeight: "bold",
-                                                        mt: 1,
-                                                        px: 2.5,
-                                                        py: 1,
-                                                        "&:hover": { backgroundColor: "rgb(51, 105, 63)" },
+                                                        px: 2.3,
+                                                        py: 0.8,
+                                                        textTransform: "none",
+                                                        "&:hover": { backgroundColor: "rgb(46, 125, 50)" },
                                                     }}
                                                     onClick={() => handleEdit(user)}
                                                 >
@@ -129,9 +110,9 @@ const TableForm: React.FC<TableFormProps> = ({ users, onDeleteUser }) => {
                                                     color="error"
                                                     sx={{
                                                         fontWeight: "bold",
-                                                        mt: 1,
                                                         px: 2,
                                                         py: 1,
+                                                        textTransform: "none",
                                                     }}
                                                     onClick={() => handleDelete(user.email)}
                                                 >
@@ -152,28 +133,15 @@ const TableForm: React.FC<TableFormProps> = ({ users, onDeleteUser }) => {
                     </TableContainer>
 
                     <Box display="flex" justifyContent="center" mt={3}>
-                        <Button
-                            variant="contained"
-                            sx={{
-                                backgroundColor: "rgba(51, 21, 140, 0.86)",
-                                color: "#fff",
-                                mt: 2,
-                                fontWeight: "bold",
-                                px: 3,
-                                py: 1.3,
-                                "&:hover": {
-                                    backgroundColor: "rgb(51, 21, 140)",
-                                    color: "rgb(255, 255, 255)",
-                                },
-                            }}
+                        <CustomButton type="button" variantType="contained" className="table-btn"
                             onClick={handleHomeClick}
                         >
                             Back to Login
-                        </Button>
+                        </CustomButton>
                     </Box>
                 </CardContent>
-            </Card>
-        </Box>
+            </CommonCard>
+        </CommonBox>
     );
 };
 

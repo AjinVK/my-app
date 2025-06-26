@@ -1,0 +1,45 @@
+.signup-button {
+    margin-left: 8px !important;
+    margin-top: 8px !important;
+    padding: 8px 20px !important;
+    font-size: 1rem !important;
+    background-color: rgba(123, 6, 6, 0.96) !important;
+    color: #fff !important;
+    font-weight: 600 !important;
+    border-radius: 7px !important;
+    text-transform: none !important;
+    transition: all 0.3s ease-in-out !important;
+    width: auto !important;
+}
+
+.signup-button:hover {
+    background-color: rgb(111, 2, 2) !important;
+    color: rgba(255, 255, 255, 0.95) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.203) !important;
+    transform: scale(1.01);
+    transition: all 0.3s ease-in-out !important;
+}
+
+.signup-button:active {
+    box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.3);
+    transform: scale(0.98);
+}
+
+.signup-button.outlined {
+    background-color: transparent !important;
+    color: rgba(123, 6, 6, 0.96) !important;
+    border: 1px solid rgba(123, 6, 6, 0.96)!important;
+}
+
+.signup-button.outlined:hover {
+    background-color: rgb(111, 2, 2) !important;
+    color: rgba(255, 255, 255, 0.95) !important;
+}
+
+.signup-password-field .MuiInput-underline:hover:before {
+    border-bottom-color: rgb(108, 0, 0) !important;
+}
+
+.signup-icon-button {
+    color: rgb(108, 0, 0) !important;
+}
