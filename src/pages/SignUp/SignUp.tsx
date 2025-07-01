@@ -57,6 +57,10 @@ const SignUp: React.FC<SignUpProps> = (props) => {
 
     const [formData, setFormData] = useState<User>(initialFormState);
     const [errors, setErrors] = useState(initialErrorState);
+    const [isEditing, setIsEditing] = useState<boolean>(false);
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [showStrengthHint, setShowStrengthHint] = useState(false);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
@@ -113,8 +117,6 @@ const SignUp: React.FC<SignUpProps> = (props) => {
         return Object.values(newErrors).every((error) => error === "");
     };
 
-    const [isEditing, setIsEditing] = useState<boolean>(false);
-
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
@@ -153,9 +155,6 @@ const SignUp: React.FC<SignUpProps> = (props) => {
         setIsEditing(false);
         document.title = "SignUp - My App";
     };
-    const [showPassword, setShowPassword] = useState(false);
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-    const [showStrengthHint, setShowStrengthHint] = useState(false);
 
     const passwordStrength = getPasswordStrength(formData.password);
 
