@@ -1,3 +1,12 @@
+export type FormErrors = {
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  password?: string;
+  confirmPassword?: string;
+  [key: string]: string | undefined;
+}
+
 export const validateFirstName = (name: string): string => {
   if (!name.trim()) {
     return "First name is required";
@@ -37,13 +46,6 @@ export const validatePassword = (password: string): string => {
     return "Password must be at least 6 characters";
   }
   return "";
-};
-
-export const preventCopyCut = (
-  setSnackbarOpen: (val: boolean) => void
-) => (e: React.ClipboardEvent<HTMLInputElement>) => {
-  e.preventDefault();
-  setSnackbarOpen(true);
 };
 
 export const validateConfirmPassword = (

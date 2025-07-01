@@ -8,25 +8,25 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { TextInput, CustomButton, CommonBox, CommonCard } from '../../components/common';
-import { validateEmail, validatePassword } from "../../utils/validation";
-
+import { validateEmail, validatePassword, type FormErrors } from "../../utils/validation";
 import img from "../../assets/vite.svg";
 import './style.css'
+import { useSnackbar } from "../../context/SnackBarContext";
 
 const Login: React.FC = () => {
   useEffect(() => {
     document.title = "Login - My App";
   }, []);
 
+  const [showPassword, setShowPassword] = useState(false);
+  const [errors, setErrors] = useState<FormErrors>({});
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    emailError: "",
-    passwordError: "",
   });
 
-  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const { showSnackbar } = useSnackbar();
 
   const handleSignUpClick = () => {
     navigate("/signup");
@@ -34,38 +34,53 @@ const Login: React.FC = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value, [`${name}Error`]: "" }));
-  };
-
-  const validateForm = (): boolean => {
-    const emailError = validateEmail(formData.email);
-    const passwordError = validatePassword(formData.password);
 
     setFormData((prev) => ({
       ...prev,
-      emailError,
-      passwordError,
+      [name]: value,
     }));
 
-    return !emailError && !passwordError;
+    setErrors((prev) => ({
+      ...prev,
+      [name]: "",
+    }));
+  };
+
+  const validateForm = (): boolean => {
+
+    const newErrors: FormErrors = {
+      email: validateEmail(formData.email),
+      password: validatePassword(formData.password),
+    };
+
+    setErrors(newErrors);
+
+    if (newErrors.email) showSnackbar(newErrors.email, "error");
+    if (newErrors.password) showSnackbar(newErrors.password, "error");
+
+    return Object.values(newErrors).every((error) => error === "");
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (validateForm()) {
-      alert("Login Successful!");
-      setFormData({
-        email: "",
-        password: "",
-        emailError: "",
-        passwordError: "",
-      });
+    if (!validateForm()) {
+      // showSnackbar("Please fix validation errors", "error");
+      return;
     }
+
+    showSnackbar("Login Successful!", "success");
+
+    setFormData({
+      email: "",
+      password: "",
+    });
+    setErrors({});
   };
 
   return (
+
     <CommonBox variant="login">
-     <CommonCard cardType="login">
+      <CommonCard cardType="login">
         <Grid container direction={{ xs: "column", sm: "row" }}>
           <Grid size={{ xs: 12, sm: 6 }} p={3}>
             <CardContent>
@@ -87,8 +102,8 @@ const Login: React.FC = () => {
                   className="login-field"
                   value={formData.email}
                   onChange={handleChange}
-                  error={formData.emailError} />
-
+                  error={!!errors.email}
+                />
                 <TextInput
                   label="Password"
                   name="password"
@@ -98,7 +113,7 @@ const Login: React.FC = () => {
                   iconButtonClassName="login-icon-button"
                   value={formData.password}
                   onChange={handleChange}
-                  error={formData.passwordError}
+                  error={!!errors.password}
                   showPassword={showPassword}
                   setShowPassword={setShowPassword} />
 

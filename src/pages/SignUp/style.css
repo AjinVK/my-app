@@ -21,14 +21,14 @@
 }
 
 .signup-button:active {
-    box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.3);
+    box-shadow: inset 0 3px 6px rgba(109, 1, 1, 0.3);
     transform: scale(0.98);
 }
 
 .signup-button.outlined {
     background-color: transparent !important;
     color: rgba(123, 6, 6, 0.96) !important;
-    border: 1px solid rgba(123, 6, 6, 0.96)!important;
+    border: 1px solid rgba(123, 6, 6, 0.96) !important;
 }
 
 .signup-button.outlined:hover {
@@ -36,8 +36,14 @@
     color: rgba(255, 255, 255, 0.95) !important;
 }
 
-.signup-password-field .MuiInput-underline:hover:before {
+.signup-password-field .MuiInput-underline:hover:before,
+.signup-password-field .MuiInput-underline:after {
     border-bottom-color: rgb(108, 0, 0) !important;
+}
+
+.signup-password-field .MuiInputLabel-root.Mui-focused,
+.signup-password-field:hover .MuiInputLabel-root {
+    color: rgb(108, 0, 0) !important;
 }
 
 .signup-icon-button {

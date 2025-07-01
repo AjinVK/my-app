@@ -6,7 +6,7 @@ interface TextInputProps {
   label: string;
   name: string;
   value: string;
-  error: string;
+  error: boolean;
   type?: string;
   helperText?: string;
   className?: string;
@@ -18,8 +18,9 @@ interface TextInputProps {
   disabled?: boolean;
   onFocus?: () => void;
   onBlur?: () => void;
-  onCopy?: (e: React.ClipboardEvent<HTMLInputElement>) => void; 
-  onCut?: (e: React.ClipboardEvent<HTMLInputElement>) => void; 
+  onCopy?: (e: React.ClipboardEvent<any>) => void;
+  onCut?: (e: React.ClipboardEvent<any>) => void;
+  onPaste?: (e: React.ClipboardEvent<any>) => void;
 }
 
 const TextInput: React.FC<TextInputProps> = ({
@@ -38,12 +39,17 @@ const TextInput: React.FC<TextInputProps> = ({
   onFocus,
   onBlur,
   onCopy,
-  onCut
+  onCut,
+  onPaste
 }) => {
   const isPasswordField = type === 'password';
-  const handlePreventCopyPaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
-    if (isPasswordField) {
-      e.preventDefault();
+  const handlePreventCopyPaste = (
+    e: React.ClipboardEvent<any>,
+    customHandler?: (e: React.ClipboardEvent<any>) => void
+  ) => {
+    e.preventDefault();
+    if (customHandler) {
+      customHandler(e);
     }
   };
 
@@ -63,9 +69,9 @@ const TextInput: React.FC<TextInputProps> = ({
       disabled={disabled}
       onFocus={onFocus}
       onBlur={onBlur}
-      onCopy={onCopy}
-      onPaste={onCut}
-      onCut={handlePreventCopyPaste}
+      onCopy={(e) => handlePreventCopyPaste(e, onCopy)}
+      onCut={(e) => handlePreventCopyPaste(e, onCut)}
+      onPaste={(e) => handlePreventCopyPaste(e, onPaste)}
       InputProps={
         isPasswordField && setShowPassword
           ? {
@@ -79,7 +85,7 @@ const TextInput: React.FC<TextInputProps> = ({
           }
           : undefined
       }
-      sx={{ mb: 2 }} 
+      sx={{ mb: 2 }}
     />
   );
 };

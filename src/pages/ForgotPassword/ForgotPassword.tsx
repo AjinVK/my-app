@@ -1,56 +1,75 @@
 import React, { useEffect, useState } from "react";
 import {
-  Box,
-  Button,
-  TextField,
   Typography,
   Card,
   CardContent,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { CommonBox, CustomButton, TextInput } from "../../components/common";
+import { validateEmail } from "../../utils/validation";
+import type { FormErrors } from "../../utils/validation";
+import { useSnackbar } from "../../context/SnackBarContext";
 
 const ForgotPassword: React.FC = () => {
-  const [email, setEmail] = useState("");
-  const [emailError, setEmailError] = useState("");
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [formData, setFormData] = useState({
+    email: "",
+  });
+
   const navigate = useNavigate();
 
-   useEffect(() => {
-      document.title = "ForgotPassword - My App";
-    }, []);
+  useEffect(() => {
+    document.title = "ForgotPassword - My App";
+  }, []);
 
-  const validateEmail = () => {
-    if (!email.trim()) {
-      setEmailError("Email is required");
-      return false;
-    } else if (
-      !/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(email)
-    ) {
-      setEmailError("Enter a valid email");
-      return false;
-    }
-    setEmailError("");
-    return true;
+  const validateForm = (): boolean => {
+
+    const newErrors: FormErrors = {
+      email: validateEmail(formData.email),
+    };
+
+    setErrors(newErrors);
+
+    if (newErrors.email) showSnackbar(newErrors.email, "error");
+
+    return Object.values(newErrors).every((error) => error === "");
   };
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+
+    setErrors((prev) => ({
+      ...prev,
+      [name]: "",
+    }));
+  };
+
+  const { showSnackbar } = useSnackbar();
+
   const handleSubmit = (e: React.FormEvent) => {
+
     e.preventDefault();
-    if (validateEmail()) {
-      alert("Password reset link sent to your email.");
-      navigate("/");
+    if (!validateForm()) {
+      showSnackbar("Please fix validation errors", "error");
+      return;
     }
+    showSnackbar("Password reset link sent to your email.");
+    navigate("/");
+
+    setFormData({
+      email: "",
+    });
+    setErrors({});
   };
 
   return (
-    <Box
-      sx={{
-        minHeight: "100vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        px: 2,
-        backgroundImage: "linear-gradient(to right,#e2ef26,#076653,#0c342c)",
-      }}
-    >
+
+    <CommonBox variant="login">
       <Card sx={{
         maxWidth: 400, p: 3, borderRadius: 4,
         backgroundColor: "rgba(255, 255, 255, 0.92)", boxShadow: 6,
@@ -61,41 +80,22 @@ const ForgotPassword: React.FC = () => {
           </Typography>
 
           <form onSubmit={handleSubmit}>
-            <TextField
+            <TextInput
               label="Email"
-              variant="standard"
+              name="email"
               type="email"
               className="login-field"
-              fullWidth
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              error={!!emailError}
-              helperText={emailError}
-              required
-              sx={{ mb: 3 }}
+              value={formData.email}
+              onChange={handleChange}
+              error={!!errors.email}
             />
-
-            <Button
-              type="submit"
-              variant="contained"
-              fullWidth
-              sx={{
-                backgroundColor: "#076653",
-                color: "#fff",
-                fontWeight: "bold",
-                borderRadius: "50px",
-                py: 1.2,
-                "&:hover": {
-                  backgroundColor: "#054d3e",
-                },
-              }}
-            >
+            <CustomButton type="submit" variantType="filled" className="login-btn">
               Send Reset Link
-            </Button>
+            </CustomButton>
           </form>
         </CardContent>
       </Card>
-    </Box>
+    </CommonBox>
   );
 };
 

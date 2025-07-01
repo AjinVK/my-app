@@ -7,7 +7,7 @@ import {
     Typography,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { TextInput, CustomButton, CommonBox, CommonCard, PasswordStrengthHint } from '../../components/common';
+import { TextInput, CustomButton, CommonBox, CommonCard } from '../../components/common';
 import { getPasswordStrength, type PasswordStrength } from "../../utils/passwordUtil";
 import {
     validateFirstName,
@@ -15,10 +15,10 @@ import {
     validateEmail,
     validatePassword,
     validateConfirmPassword,
-    preventCopyCut
 } from "../../utils/validation";
 import './style.css';
-import Snackbar from "@mui/material/Snackbar";
+import { useSnackbar } from "../../context/SnackBarContext";
+import PasswordStrengthSnackbar from "../../components/common/PasswordStrengthHint";
 
 interface User {
     firstName: string;
@@ -63,6 +63,13 @@ const SignUp: React.FC<SignUpProps> = (props) => {
         setFormData((prev) => ({ ...prev, [name]: value }));
     };
 
+    const { showSnackbar } = useSnackbar();
+
+    const handlePrevent = (e: React.ClipboardEvent<any>) => {
+        e.preventDefault();
+        showSnackbar(`${e.type} action is disabled for security.`, "warning");
+    };
+
     const validateForm = () => {
         const newErrors = {
             firstName: validateFirstName(formData.firstName),
@@ -82,6 +89,26 @@ const SignUp: React.FC<SignUpProps> = (props) => {
         }
 
         setErrors(newErrors);
+        if (newErrors.firstName) {
+            showSnackbar(newErrors.firstName, 'error');
+            return false;
+        }
+        if (newErrors.lastName) {
+            showSnackbar(newErrors.lastName, 'error');
+            return false;
+        }
+        if (newErrors.email) {
+            showSnackbar(newErrors.email, 'error');
+            return false;
+        }
+        if (newErrors.password) {
+            showSnackbar(newErrors.password, 'error');
+            return false;
+        }
+        if (newErrors.confirmPassword) {
+            showSnackbar(newErrors.confirmPassword, 'error');
+            return false;
+        }
 
         return Object.values(newErrors).every((error) => error === "");
     };
@@ -95,12 +122,11 @@ const SignUp: React.FC<SignUpProps> = (props) => {
         try {
             if (isEditing) {
                 onUpdateUser(formData);
-                alert("User updated successfully!");
+                showSnackbar("User updated successfully!", "success");
             } else {
                 onSubmitUser(formData);
-                alert("Sign Up Successful!");
+                showSnackbar("User registered successfully!", "success");
             }
-
             setFormData(initialFormState);
             setErrors(initialErrorState);
             setIsEditing(false);
@@ -132,7 +158,6 @@ const SignUp: React.FC<SignUpProps> = (props) => {
     const [showStrengthHint, setShowStrengthHint] = useState(false);
 
     const passwordStrength = getPasswordStrength(formData.password);
-    const [snackbarOpen, setSnackbarOpen] = useState(false);
 
     return (
         <CommonBox variant="signup">
@@ -164,18 +189,16 @@ const SignUp: React.FC<SignUpProps> = (props) => {
                                     name="firstName"
                                     className="signup-password-field"
                                     value={formData.firstName}
-                                    error={errors.firstName}
+                                    error={!!errors.firstName}
                                     onChange={handleChange}
-                                    helperText={errors.firstName}
                                 />
                                 <TextInput
                                     label="Last Name"
                                     name="lastName"
                                     className="signup-password-field"
                                     value={formData.lastName}
-                                    error={errors.lastName}
+                                    error={!!errors.lastName}
                                     onChange={handleChange}
-                                    helperText={errors.lastName}
                                 />
                                 <TextInput
                                     label="Email"
@@ -183,10 +206,9 @@ const SignUp: React.FC<SignUpProps> = (props) => {
                                     type="email"
                                     className="signup-password-field"
                                     value={formData.email}
-                                    error={errors.email}
+                                    error={!!errors.email}
                                     onChange={handleChange}
                                     disabled={isEditing}
-                                    helperText={errors.email}
                                 />
                                 <Box sx={{ position: 'relative' }}>
                                     <TextInput
@@ -197,43 +219,36 @@ const SignUp: React.FC<SignUpProps> = (props) => {
                                         iconButtonClassName="signup-icon-button"
                                         isPasswordField
                                         value={formData.password}
-                                        error={errors.password}
-                                        helperText={errors.password}
+                                        error={!!errors.password}
                                         showPassword={showPassword}
                                         setShowPassword={setShowPassword}
-                                        onCopy={preventCopyCut(setSnackbarOpen)}
-                                        onCut={preventCopyCut(setSnackbarOpen)}
                                         onFocus={() => setShowStrengthHint(true)}
                                         onBlur={() => setTimeout(() => setShowStrengthHint(false), 150)}
                                         onChange={(e) => {
                                             handleChange(e);
                                             setShowStrengthHint(true);
                                         }}
+                                        onCopy={handlePrevent}
+                                        onCut={handlePrevent}
+                                        onPaste={handlePrevent}
                                     />
-                                    <PasswordStrengthHint
-                                        show={showStrengthHint}
+                                    <PasswordStrengthSnackbar show={showStrengthHint}
                                         password={formData.password}
                                         strength={{
                                             ...passwordStrength,
                                             color: passwordStrength.color as PasswordStrength['color'],
                                         }}
+                                        onClose={() => setShowStrengthHint(false)}
+                                        autoHideDuration={1000}
                                     />
                                 </Box>
-                                <Snackbar
-                                    open={snackbarOpen}
-                                    autoHideDuration={2000}
-                                    onClose={() => setSnackbarOpen(false)}
-                                    message="Copy and Cut actions are disabled for security."
-                                    anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-                                />
                                 <TextInput
                                     label="Confirm Password"
                                     name="confirmPassword"
                                     type="password"
                                     className="signup-password-field"
                                     value={formData.confirmPassword}
-                                    error={errors.confirmPassword}
-                                    helperText={errors.confirmPassword}
+                                    error={!!errors.confirmPassword}
                                     showPassword={showConfirmPassword}
                                     setShowPassword={setShowConfirmPassword}
                                     isPasswordField={true}
@@ -242,6 +257,7 @@ const SignUp: React.FC<SignUpProps> = (props) => {
                                     onChange={(e) => {
                                         handleChange(e);
                                     }}
+                                    onPaste={handlePrevent}
                                 />
                                 <CardActions>
                                     <CustomButton
